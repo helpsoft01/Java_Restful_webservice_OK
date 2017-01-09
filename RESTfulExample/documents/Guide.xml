@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
++ Chạy trên local web cần:
+	- Vì driver jdbc của Oracle không quản lý và down bằng maven được,
+	nên cần tự down bằng tay về về vào folder lib cho
+	tiện quản lý , như vậy sẽ chạy được trên restful hoặc web
++ Chạy trên server tomcat:
+	- trong file pom.xml cần thêm 
+		<build>
+			<resources>		
+				<resource>
+					<directory>src</directory>
+				</resource>
+			</resources>
+		</build>
+		Note: thêm resources như trên vào file pom.xml để khi Export file war hoặc dùng maven để install
+			nó sẽ tự động tạo folder: META-INF chứa file persistence.xml bên trong và thuộc folder classes của WEB-INF
+			Khi chạy JPA cần có persistence.xml để đọc được kết nối database, 
+			do đó phải tạo được folder trên webserver
+			
+	- Export file war tới folder: webapps của tomcat
+	- Copy file ojdbc.jar (file driver của oracle database) vào thử mục lib trong folder WEB-INF 
+		( thư mục đã được tạo trên webapps) 
+		hoặc Copy vào trong folder lib của Tomcat Apache ( sẽ dùng chung được cho toàn Tomcat)
+		Note: khi copy vào lib của Tomcat thì phải khởi động lại tomcat thì mới nhận file jar vừa copy vào
+	
++ Note: File persistence.xml
+	1. Property is: "hiCbernate.dialect"
+		Đối với mỗi Jdbc down về sẽ có version khác nhau 
+		do đó việc khai báo <property name="hiCbernate.dialect" value="org.hibernate.dialect.Oracle8iDialect" />
+		là rất quan trọng, Cần thay đổi value của property này có thể là:		  
+			org.hibernate.dialect.Oracle8iDialect
+			org.hibernate.dialect.Oracle12cDialect
+			org.hibernate.dialect.Oracle10iDialect
+			org.hibernate.dialect.OracleDialect
+ 	2. Property is: ""provider"
+ 		to use: <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+ 		not use: <provider>org.hibernate.ejb.HibernatePersistenceProvider</provider>
++ Note: File pom.xml
+	Các plugins sẽ có các version khác nhau ứng với mỗi version của java, project web module,.... 
+		được cấu hình trong Project Facets 	 
+		Do đó: khi chỉnh các thông số trong Project Facets cần điều chỉnh lại version của plugin 
+			

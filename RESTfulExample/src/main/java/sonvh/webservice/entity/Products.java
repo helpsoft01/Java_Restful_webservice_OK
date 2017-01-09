@@ -33,7 +33,7 @@ public class Products {
 		listProducts.put("3", t);
 	}
 
-	public boolean updateGroup(Product group) {
+	public boolean update(Product group) {
 
 		boolean flag = true;
 		String key = String.valueOf(group.getId());
@@ -46,7 +46,7 @@ public class Products {
 		return flag;
 	}
 
-	public boolean addGroup(Product group) {
+	public boolean add(Product group) {
 
 		boolean flag = true;
 		String key = String.valueOf(group.getId());
@@ -59,14 +59,14 @@ public class Products {
 		return flag;
 	}
 
-	public Product findUser_byID(int id) {
+	public Product find_byID(int id) {
 
 		Product result = listProducts.get(String.valueOf(id));
 
 		return result;
 	}
 
-	public List<Product> findUser_byName(String name) {
+	public List<Product> find_byName(String name) {
 
 		List<Product> result = new ArrayList<Product>();
 		Iterator<?> i = listProducts.entrySet().iterator();
@@ -80,7 +80,7 @@ public class Products {
 		return result;
 	}
 
-	public List<Product> getGroups() {
+	public List<Product> getList() {
 		List<Product> result = new ArrayList<Product>(listProducts.values());
 		return result;
 	}
